@@ -1,15 +1,14 @@
-import { View, Text } from "react-native";
+import { View, Text, StatusBar } from "react-native";
+import Main from "./screens/Main";
+import * as NavigationBar from 'expo-navigation-bar';
+
+NavigationBar.setBackgroundColorAsync("black");
 
 export default function App() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Universal React with Expo</Text>
+    <View style={{backgroundColor: "black", height: "100%" }} >
+      <StatusBar />
+      <Main/>
     </View>
   );
 }
