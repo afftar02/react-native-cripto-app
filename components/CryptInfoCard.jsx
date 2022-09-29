@@ -1,24 +1,29 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity, TouchableHighlight } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 export default function CryptInfoCard() {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
-      <View style={styles.infoContainer}>
-        <Text style={styles.rank}>1</Text>
-        <Image style={styles.image} source={{ uri: "https://assets.coincap.io/assets/icons/btc@2x.png" }} />
-        <View style={{flex: 1}}>
-          <Text style={{ color: "white", fontWeight: "700" }}>Bitcoin</Text>
-          <Text style={{ color: "white", opacity: 0.5 }}>BTC</Text>
+    <TouchableHighlight onPress={() => navigation.navigate('CryptoInfo')}>
+      <View style={styles.container}>
+        <View style={styles.infoContainer}>
+          <Text style={styles.rank}>1</Text>
+          <Image style={styles.image} source={{ uri: "https://assets.coincap.io/assets/icons/btc@2x.png" }} />
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: "white", fontWeight: "700" }}>Bitcoin</Text>
+            <Text style={{ color: "white", opacity: 0.5 }}>BTC</Text>
+          </View>
+          <View style={styles.priceContainer}>
+            <Text style={{ color: "rgb(24, 198, 131)" }}>3.25%</Text>
+            <Text style={{ color: "white" }}>$19,380</Text>
+          </View>
         </View>
-        <View style={styles.priceContainer}>
-          <Text style={{color: "rgb(24, 198, 131)"}}>3.25%</Text>
-          <Text style={{color: "white"}}>$19,380</Text>
-        </View>
+        <TouchableOpacity>
+          <Text style={styles.addButton}>+</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity>
-        <Text style={styles.addButton}>+</Text>
-      </TouchableOpacity>
-    </View>
+    </TouchableHighlight>
   );
 }
 
