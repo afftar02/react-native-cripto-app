@@ -154,10 +154,9 @@ export default function Chart() {
     };
 
     const data = {
-        labels: historyResponse.data.map((item) => item.time).slice(-5),
         datasets: [
             {
-                data: historyResponse.data.map((item) => (Math.round(item.priceUsd * 100) / 100)).slice(-5)
+                data: historyResponse.data.map((item) => (Math.round(item.priceUsd * 100) / 100))
             }
         ]
     }
@@ -170,17 +169,15 @@ export default function Chart() {
                 height={320}
                 yAxisSuffix='$'
                 yAxisInterval={1}
+                withDots={false}
+                withInnerLines={false}
+                withOuterLines={false}
                 chartConfig={{
                     decimalPlaces: 2,
                     color: (opacity = 0) => `rgba(0, 255, 0, ${opacity})`,
                     labelColor: (opacity = 0) => `rgba(255,255,255, ${opacity})`,
                     style: {
                         borderRadius: 16
-                    },
-                    propsForDots: {
-                        r: '6',
-                        strokeWidth: "2",
-                        stroke: "rgba(0, 255, 0)",
                     },
                 }}
                 bezier
