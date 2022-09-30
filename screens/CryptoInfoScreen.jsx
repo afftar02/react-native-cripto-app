@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import InfoRow from '../components/InfoRow';
+import Chart from '../components/Chart';
 
 export default function CryptInfoScreen() {
     const navigation = useNavigation();
@@ -41,14 +42,15 @@ export default function CryptInfoScreen() {
                     </View>
                 </View>
                 <View style={{ width: "100%" }}>
-                    <InfoRow parameterName={'Rank'} value={response.data.rank} unchanged/>
-                    <InfoRow parameterName={'Price'} value={response.data.priceUsd} isUsd isRounded/>
-                    <InfoRow parameterName={'Market Cap'} value={response.data.marketCapUsd} isUsd isCounted/>
-                    <InfoRow parameterName={'VWAP(24Hr)'} value={response.data.vwap24Hr} isUsd isRounded/>
-                    <InfoRow parameterName={'Supply'} value={response.data.supply} isCounted/>
-                    <InfoRow parameterName={'Volume(24Hr)'} value={response.data.volumeUsd24Hr} isUsd isCounted/>
-                    <InfoRow parameterName={'Change(24Hr)'} value={response.data.changePercent24Hr} isColored isRounded isPercentage/>
-                </View>
+                    <InfoRow parameterName={'Rank'} value={response.data.rank} unchanged />
+                    <InfoRow parameterName={'Price'} value={response.data.priceUsd} isUsd isRounded />
+                    <InfoRow parameterName={'Market Cap'} value={response.data.marketCapUsd} isUsd isCounted />
+                    <InfoRow parameterName={'VWAP(24Hr)'} value={response.data.vwap24Hr} isUsd isRounded />
+                    <InfoRow parameterName={'Supply'} value={response.data.supply} isCounted />
+                    <InfoRow parameterName={'Volume(24Hr)'} value={response.data.volumeUsd24Hr} isUsd isCounted />
+                    <InfoRow parameterName={'Change(24Hr)'} value={response.data.changePercent24Hr} isColored isRounded isPercentage />
+                </View> 
+                <Chart/>
             </ScrollView>
         </View>
     )
