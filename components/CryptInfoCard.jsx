@@ -19,7 +19,7 @@ export default function CryptInfoCard() {
             <Text style={{ color: "white" }}>$19,380</Text>
           </View>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('AddingCrypto')}>
           <Text style={styles.addButton}>+</Text>
         </TouchableOpacity>
       </View>

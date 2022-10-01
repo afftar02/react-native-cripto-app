@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { DarkTheme, NavigationContainer } from '@react-navigation/native';
 import CryptoInfoScreen from './CryptoInfoScreen';
 import MainScreen from './MainScreen';
+import AddingCryptoScreen from './AddingCryptoScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,6 +14,7 @@ export const Navigation = () => {
                 <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false, statusBarColor: 'black' }} >
                     <Stack.Screen name='Main' component={MainScreen} />
                     <Stack.Screen name='CryptoInfo' component={CryptoInfoScreen} />
+                    <Stack.Screen name='AddingCrypto' component={AddingCryptoScreen} />
                 </Stack.Navigator>
             </View>
         </NavigationContainer>

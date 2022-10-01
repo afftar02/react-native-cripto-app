@@ -1,11 +1,9 @@
-import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
 import InfoRow from '../components/InfoRow';
 import Chart from '../components/Chart';
+import Header from '../components/Header';
 
 export default function CryptInfoScreen() {
-    const navigation = useNavigation();
-
     const response = {
         "data": {
             "id": "bitcoin",
@@ -25,14 +23,7 @@ export default function CryptInfoScreen() {
 
     return (
         <View style={{ flex: 1, width: "100%" }}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Text style={styles.backButton}>{'< Back'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.addButton}>+</Text>
-                </TouchableOpacity>
-            </View>
+            <Header isPlus/>
             <ScrollView contentContainerStyle={{ alignItems: "center" }}>
                 <View style={styles.headContainer}>
                     <Image style={styles.image} source={{ uri: "https://assets.coincap.io/assets/icons/btc@2x.png" }} />
@@ -57,22 +48,6 @@ export default function CryptInfoScreen() {
 }
 
 const styles = StyleSheet.create({
-    header: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingHorizontal: 15,
-    },
-    backButton: {
-        color: "#99ccff",
-        fontSize: 25,
-        fontWeight: "100",
-    },
-    addButton: {
-        color: "#99ccff",
-        fontSize: 50,
-        fontWeight: "100",
-    },
     headContainer: {
         flexDirection: "row",
         alignItems: "center",
