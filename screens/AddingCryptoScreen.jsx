@@ -39,7 +39,7 @@ const AddingCryptoScreen = ({ image, name, shortName, price = 19380 }) => {
                     onFocus={() => setBorderBottomColor('#ffffff')}
                     onBlur={() => setBorderBottomColor('rgba(255, 255, 255, 0.3)')}
                 />
-                <TouchableOpacity onPress={() => navigation.navigate('Main')}>
+                <TouchableOpacity onPress={() => navigation.navigate('List')}>
                     <Text style={styles.okButton}>Ok</Text>
                 </TouchableOpacity>
             </View>
@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
         color: "white",
         fontWeight: "300",
         fontSize: 25,
-        marginTop: 50,
+        marginTop: 15,
     },
     input: {
         width: 200,
         height: 80,
-        marginTop: 100,
+        marginTop: 80,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         borderWidth: 1,
         color: "white",
