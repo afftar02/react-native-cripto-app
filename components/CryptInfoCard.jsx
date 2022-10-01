@@ -1,7 +1,8 @@
 import { StyleSheet, View, Text, Image, TouchableOpacity, TouchableHighlight } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function CryptInfoCard() {
+export default function CryptInfoCard({ isPlus }) {
   const navigation = useNavigation();
 
   return (
@@ -19,9 +20,15 @@ export default function CryptInfoCard() {
             <Text style={{ color: "white" }}>$19,380</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('AddingCrypto')}>
-          <Text style={styles.addButton}>+</Text>
-        </TouchableOpacity>
+        {
+          isPlus ?
+            <TouchableOpacity onPress={() => navigation.navigate('AddingCrypto')}>
+              <Text style={styles.addButton}>+</Text>
+            </TouchableOpacity> :
+            <TouchableOpacity>
+              <Icon name='delete' style={styles.removeButton}/>
+            </TouchableOpacity>
+        }
       </View>
     </TouchableHighlight>
   );
@@ -37,6 +44,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.3)",
     flexDirection: "row",
+    alignItems: "center",
   },
   infoContainer: {
     flexDirection: "row",
@@ -62,5 +70,10 @@ const styles = StyleSheet.create({
     right: 30,
     fontSize: 50,
     fontWeight: "100",
+  },
+  removeButton: {
+    color:'#ff2626',
+    right: 25,
+    fontSize: 45,
   }
 });

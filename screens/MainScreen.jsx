@@ -8,7 +8,7 @@ export default function MainScreen() {
     <View>
       <FlatList
         data={items}
-        renderItem={({ item }) => <CryptInfoCard/>} />
+        renderItem={({ item }) => <CryptInfoCard isPlus />} />
     </View>
   )
 }
