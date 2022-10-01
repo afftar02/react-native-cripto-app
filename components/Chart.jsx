@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { LineChart } from 'react-native-chart-kit';
 import axios from 'axios';
 
-export default function Chart({ id }) {
+export default function Chart({ id, percentValue }) {
+    const chartColor = percentValue >= 0 ? 'rgb(24, 198, 131)' : 'rgb(244, 67, 54)';
     const [history, setHistory] = useState({
         labels: [1],
         datasets: [
@@ -43,7 +44,7 @@ export default function Chart({ id }) {
                 withOuterLines={false}
                 chartConfig={{
                     decimalPlaces: 2,
-                    color: (opacity = 0) => `rgba(0, 255, 0, ${opacity})`,
+                    color: (opacity = 0) => `${chartColor}`,
                     labelColor: (opacity = 0) => `rgba(255,255,255, ${opacity})`,
                     style: {
                         borderRadius: 16

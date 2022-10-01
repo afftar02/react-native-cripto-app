@@ -43,7 +43,7 @@ export default function CryptInfoScreen({ route }) {
                     <InfoRow parameterName={'Volume(24Hr)'} value={itemInfo?.volumeUsd24Hr} isUsd isCounted />
                     <InfoRow parameterName={'Change(24Hr)'} value={itemInfo?.changePercent24Hr} isColored isRounded isPercentage />
                 </View>
-                <Chart id={id} />
+                <Chart id={id} percentValue={itemInfo?.changePercent24Hr} />
             </ScrollView>
         </View>
     )
