@@ -2,31 +2,39 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, TouchableHighlight } f
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function CryptInfoCard({ isPlus }) {
+function roundValue(value) {
+  value = Math.round(value * 100) / 100;
+  let afterDotAmount = value.toString().includes('.') ? (value.toString().split('.').pop().length) : 0;
+  if (afterDotAmount === 0) return value.toString() + '.00';
+  else if (afterDotAmount === 1) return value.toString() + '.0';
+  return value;
+}
+
+export default function CryptInfoCard({ isPlus, id, rank, name, symbol, changePercent24Hr, price }) {
   const navigation = useNavigation();
 
   return (
-    <TouchableHighlight onPress={() => navigation.navigate('CryptoInfo')}>
+    <TouchableHighlight onPress={() => navigation.navigate('CryptoInfo', { id: id })}>
       <View style={styles.container}>
         <View style={styles.infoContainer}>
-          <Text style={styles.rank}>1</Text>
-          <Image style={styles.image} source={{ uri: "https://assets.coincap.io/assets/icons/btc@2x.png" }} />
+          <Text style={styles.rank}>{rank}</Text>
+          <Image style={styles.image} source={{ uri: `https://assets.coincap.io/assets/icons/${symbol?.toLowerCase()}@2x.png` }} />
           <View style={{ flex: 1 }}>
-            <Text style={{ color: "white", fontWeight: "700" }}>Bitcoin</Text>
-            <Text style={{ color: "white", opacity: 0.5 }}>BTC</Text>
+            <Text style={{ color: "white", fontWeight: "700" }}>{name}</Text>
+            <Text style={{ color: "white", opacity: 0.5 }}>{symbol}</Text>
           </View>
           <View style={styles.priceContainer}>
-            <Text style={{ color: "rgb(24, 198, 131)" }}>3.25%</Text>
-            <Text style={{ color: "white" }}>$19,380</Text>
+            <Text style={changePercent24Hr >= 0 ? { color: "rgb(24, 198, 131)" } : { color: "rgb(244, 67, 54)" }}>{roundValue(changePercent24Hr)}%</Text>
+            <Text style={{ color: "white" }}>${roundValue(price)}</Text>
           </View>
         </View>
         {
           isPlus ?
-            <TouchableOpacity onPress={() => navigation.navigate('AddingCrypto')}>
+            <TouchableOpacity onPress={() => navigation.navigate('AddingCrypto', { name, symbol, price })}>
               <Text style={styles.addButton}>+</Text>
             </TouchableOpacity> :
             <TouchableOpacity>
-              <Icon name='delete' style={styles.removeButton}/>
+              <Icon name='delete' style={styles.removeButton} />
             </TouchableOpacity>
         }
       </View>
@@ -54,7 +62,7 @@ const styles = StyleSheet.create({
   },
   rank: {
     color: "white",
-    fontSize: 30,
+    fontSize: 20,
   },
   image: {
     width: 40,
@@ -72,7 +80,7 @@ const styles = StyleSheet.create({
     fontWeight: "100",
   },
   removeButton: {
-    color:'#ff2626',
+    color: '#ff2626',
     right: 25,
     fontSize: 45,
   }

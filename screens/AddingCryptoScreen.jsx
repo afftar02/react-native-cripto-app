@@ -3,16 +3,18 @@ import { useState } from 'react';
 import Header from '../components/Header';
 import { useNavigation } from '@react-navigation/native';
 
-const AddingCryptoScreen = ({ image, name, shortName, price = 19380 }) => {
+const AddingCryptoScreen = ({ route }) => {
     const [value, setValue] = useState();
     const [priceValue, setPriceValue] = useState(0);
     const [borderBottomColor, setBorderBottomColor] = useState('rgba(255, 255, 255, 0.3)');
+
+    const { name, symbol, price } = route.params;
 
     const navigation = useNavigation();
 
     function valueChanged(value) {
         setValue(value);
-        setPriceValue(value * price);
+        setPriceValue(value * (Math.round(price * 100) / 100));
     }
 
     return (
@@ -20,10 +22,10 @@ const AddingCryptoScreen = ({ image, name, shortName, price = 19380 }) => {
             <Header />
             <View style={{ alignItems: 'center' }}>
                 <View style={styles.headContainer}>
-                    <Image style={styles.image} source={{ uri: "https://assets.coincap.io/assets/icons/btc@2x.png" }} />
+                    <Image style={styles.image} source={{ uri: `https://assets.coincap.io/assets/icons/${symbol?.toLowerCase()}@2x.png` }} />
                     <View>
-                        <Text style={{ color: "white", fontWeight: "700", fontSize: 30 }}>Bitcoin</Text>
-                        <Text style={{ color: "white", opacity: 0.5, fontSize: 20 }}>BTC</Text>
+                        <Text style={{ color: "white", fontWeight: "700", fontSize: 30 }}>{name}</Text>
+                        <Text style={{ color: "white", opacity: 0.5, fontSize: 20 }}>{symbol}</Text>
                     </View>
                 </View>
                 <Text style={styles.resultPrice}>Result: {priceValue}$</Text>

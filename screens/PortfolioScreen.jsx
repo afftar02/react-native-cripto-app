@@ -3,7 +3,7 @@ import { useState } from 'react';
 import CryptInfoCard from '../components/CryptInfoCard';
 
 const PortfolioScreen = () => {
-  const items = Array.from(Array(50).keys());
+  const [items, setItems] = useState();
 
   return (
     <View>

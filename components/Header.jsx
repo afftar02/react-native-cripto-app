@@ -2,7 +2,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-const Header = ({ isPlus }) => {
+const Header = ({ isPlus, name, symbol, price }) => {
     const navigation = useNavigation();
 
     return (
@@ -11,7 +11,7 @@ const Header = ({ isPlus }) => {
                 <Text style={styles.backButton}>{'< Back'}</Text>
             </TouchableOpacity>
             {isPlus &&
-                <TouchableOpacity onPress={() => navigation.navigate('AddingCrypto')}>
+                <TouchableOpacity onPress={() => navigation.navigate('AddingCrypto', { name, symbol, price })}>
                     <Text style={styles.addButton}>+</Text>
                 </TouchableOpacity>}
         </View>

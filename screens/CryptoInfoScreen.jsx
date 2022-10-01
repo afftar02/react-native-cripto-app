@@ -1,47 +1,49 @@
-import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView,Alert } from 'react-native';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import InfoRow from '../components/InfoRow';
 import Chart from '../components/Chart';
 import Header from '../components/Header';
 
-export default function CryptInfoScreen() {
-    const response = {
-        "data": {
-            "id": "bitcoin",
-            "rank": "1",
-            "symbol": "BTC",
-            "name": "Bitcoin",
-            "supply": "17193925.0000000000000000",
-            "maxSupply": "21000000.0000000000000000",
-            "marketCapUsd": "119179791817.6740161068269075",
-            "volumeUsd24Hr": "2928356777.6066665425687196",
-            "priceUsd": "6931.5058555666618359",
-            "changePercent24Hr": "-0.8101417214350335",
-            "vwap24Hr": "7175.0663247679233209"
-        },
-        "timestamp": 1533581098863
-    };
+export default function CryptInfoScreen({ route }) {
+    const { id } = route.params;
+    const [itemInfo, setItemInfo] = useState();
+
+    useEffect(() => {
+        axios.get(`https://api.coincap.io/v2/assets/${id}`)
+      .then(({ data }) => {
+        setItemInfo(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        Alert.alert('Error', 'Network Error');
+      });
+    }, []);
 
     return (
         <View style={{ flex: 1, width: "100%" }}>
-            <Header isPlus/>
+            <Header isPlus 
+            name={itemInfo?.name}
+            symbol={itemInfo?.symbol}
+            price={itemInfo?.priceUsd} />
             <ScrollView contentContainerStyle={{ alignItems: "center" }}>
                 <View style={styles.headContainer}>
-                    <Image style={styles.image} source={{ uri: "https://assets.coincap.io/assets/icons/btc@2x.png" }} />
+                    <Image style={styles.image} source={{ uri: `https://assets.coincap.io/assets/icons/${itemInfo?.symbol.toLowerCase()}@2x.png` }} />
                     <View style={styles.nameContainer}>
-                        <Text style={{ color: "white", fontWeight: "700", fontSize: 30 }}>Bitcoin</Text>
-                        <Text style={{ color: "white", opacity: 0.5, fontSize: 20 }}>BTC</Text>
+                        <Text style={{ color: "white", fontWeight: "700", fontSize: 30 }}>{itemInfo?.name}</Text>
+                        <Text style={{ color: "white", opacity: 0.5, fontSize: 20 }}>{itemInfo?.symbol}</Text>
                     </View>
                 </View>
                 <View style={{ width: "100%" }}>
-                    <InfoRow parameterName={'Rank'} value={response.data.rank} unchanged />
-                    <InfoRow parameterName={'Price'} value={response.data.priceUsd} isUsd isRounded />
-                    <InfoRow parameterName={'Market Cap'} value={response.data.marketCapUsd} isUsd isCounted />
-                    <InfoRow parameterName={'VWAP(24Hr)'} value={response.data.vwap24Hr} isUsd isRounded />
-                    <InfoRow parameterName={'Supply'} value={response.data.supply} isCounted />
-                    <InfoRow parameterName={'Volume(24Hr)'} value={response.data.volumeUsd24Hr} isUsd isCounted />
-                    <InfoRow parameterName={'Change(24Hr)'} value={response.data.changePercent24Hr} isColored isRounded isPercentage />
-                </View> 
-                <Chart/>
+                    <InfoRow parameterName={'Rank'} value={itemInfo?.rank} unchanged />
+                    <InfoRow parameterName={'Price'} value={itemInfo?.priceUsd} isUsd isRounded />
+                    <InfoRow parameterName={'Market Cap'} value={itemInfo?.marketCapUsd} isUsd isCounted />
+                    <InfoRow parameterName={'VWAP(24Hr)'} value={itemInfo?.vwap24Hr} isUsd isRounded />
+                    <InfoRow parameterName={'Supply'} value={itemInfo?.supply} isCounted />
+                    <InfoRow parameterName={'Volume(24Hr)'} value={itemInfo?.volumeUsd24Hr} isUsd isCounted />
+                    <InfoRow parameterName={'Change(24Hr)'} value={itemInfo?.changePercent24Hr} isColored isRounded isPercentage />
+                </View>
+                <Chart id={id} />
             </ScrollView>
         </View>
     )
