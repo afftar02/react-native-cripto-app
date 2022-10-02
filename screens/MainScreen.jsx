@@ -4,18 +4,19 @@ import CryptInfoCard from '../components/CryptInfoCard';
 import axios from 'axios';
 
 export default function MainScreen() {
-  const [items, setItems] = useState();
+  const [items, setItems] = useState([]);
+  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
-    axios.get('https://api.coincap.io/v2/assets')
+    axios.get(`https://api.coincap.io/v2/assets?limit=20&offset=${offset}`)
       .then(({ data }) => {
-        setItems(data.data);
+        setItems([...items, ...data.data]);
       })
       .catch((err) => {
         console.log(err);
         Alert.alert('Error', 'Network Error');
       });
-  }, [])
+  }, [offset])
 
   return (
     <View>
@@ -29,7 +30,8 @@ export default function MainScreen() {
             symbol={item.symbol}
             changePercent24Hr={item.changePercent24Hr}
             price={item.priceUsd}
-          />} />
+          />}
+        onEndReached={() => setOffset(offset + 20)} />
     </View>
   )
 }
