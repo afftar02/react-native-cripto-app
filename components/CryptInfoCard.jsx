@@ -6,7 +6,7 @@ function roundValue(value) {
   value = Math.round(value * 100) / 100;
   let afterDotAmount = value.toString().includes('.') ? (value.toString().split('.').pop().length) : 0;
   if (afterDotAmount === 0) return value.toString() + '.00';
-  else if (afterDotAmount === 1) return value.toString() + '.0';
+  else if (afterDotAmount === 1) return value.toString() + '0';
   return value;
 }
 

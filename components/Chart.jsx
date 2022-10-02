@@ -20,7 +20,7 @@ export default function Chart({ id, percentValue }) {
                 const history = {
                     datasets: [
                         {
-                            data: (data.data.map((item) => (Math.round(item.priceUsd * 100) / 100)))
+                            data: (data.data.map((item) => item.priceUsd))
                         }
                     ]
                 };
