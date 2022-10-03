@@ -1,12 +1,22 @@
 {
   "expo": {
     "name": "Crypto-app",
+    "icon": "./assets/bitcoin.png",
     "slug": "Crypto-app",
     "version": "1.0.0",
+    "android": {
+      "package": "com.crypto.app",
+      "versionCode": 1
+    },
     "platforms": [
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "5c1db97f-8572-4f1d-ad28-5bcf2c774772"
+      }
+    }
   }
 }
