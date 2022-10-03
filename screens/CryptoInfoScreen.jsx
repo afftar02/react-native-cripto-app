@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image, ScrollView,Alert } from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView, Alert } from 'react-native';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import InfoRow from '../components/InfoRow';
@@ -11,21 +11,24 @@ export default function CryptInfoScreen({ route }) {
 
     useEffect(() => {
         axios.get(`https://api.coincap.io/v2/assets/${id}`)
-      .then(({ data }) => {
-        setItemInfo(data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        Alert.alert('Error', 'Network Error');
-      });
+            .then(({ data }) => {
+                setItemInfo(data.data);
+            })
+            .catch((err) => {
+                console.log(err);
+                Alert.alert('Error', 'Network Error');
+            });
     }, []);
 
     return (
         <View style={{ flex: 1, width: "100%" }}>
-            <Header isPlus 
-            name={itemInfo?.name}
-            symbol={itemInfo?.symbol}
-            price={itemInfo?.priceUsd} />
+            <Header isPlus
+                id={id}
+                name={itemInfo?.name}
+                symbol={itemInfo?.symbol}
+                price={itemInfo?.priceUsd}
+                rank={itemInfo?.rank}
+                changePercent24Hr={itemInfo?.changePercent24Hr} />
             <ScrollView contentContainerStyle={{ alignItems: "center" }}>
                 <View style={styles.headContainer}>
                     <Image style={styles.image} source={{ uri: `https://assets.coincap.io/assets/icons/${itemInfo?.symbol.toLowerCase()}@2x.png` }} />

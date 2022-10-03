@@ -1,20 +1,32 @@
 import { StyleSheet, View, Text, FlatList } from 'react-native';
-import { useState } from 'react';
+import { useContext } from 'react';
 import CryptInfoCard from '../components/CryptInfoCard';
+import { AppContext } from '../App';
 
 const PortfolioScreen = () => {
-  const [items, setItems] = useState();
+  const { state } = useContext(AppContext);
+  const pricePercentage = Math.round((state.portfolio.lastPrice > 0 ? (state.portfolio.price * 100) / state.portfolio.lastPrice - 100 : 0) * 100) / 100;
+  const priceDifference = Math.round((state.portfolio.price - state.portfolio.lastPrice) * 100) / 100;
+  const differenceSign = priceDifference < 0 ? '' : '+';
 
   return (
     <View>
       <View style={styles.portfolioPriceContainer}>
-        <Text style={{ color: '#ffffff', fontSize: 30 }}>134,32 USD</Text>
-        <Text style={{ color: 'rgba(255,255,255, 0.7)', fontSize: 25 }}>+2,38</Text>
-        <Text style={{ color: 'rgba(255,255,255, 0.7)', fontSize: 25 }}>(1,80 %)</Text>
+        <Text style={{ color: '#ffffff', fontSize: 30 }}>{state.portfolio.price} USD</Text>
+        <Text style={{ color: 'rgba(255,255,255, 0.7)', fontSize: 25 }}>{differenceSign + priceDifference}</Text>
+        <Text style={{ color: 'rgba(255,255,255, 0.7)', fontSize: 25 }}>({pricePercentage} %)</Text>
       </View>
       <FlatList
-        data={items}
-        renderItem={({ item }) => <CryptInfoCard />} />
+        data={state.portfolio.cryptoCurrencies}
+        renderItem={({ item }) =>
+          <CryptInfoCard
+            id={item.id}
+            rank={item.rank}
+            name={item.name}
+            symbol={item.symbol}
+            changePercent24Hr={item.changePercent24Hr}
+            price={item.priceUsd}
+          />} />
     </View>
   )
 }

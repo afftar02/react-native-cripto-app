@@ -1,6 +1,8 @@
 import { StyleSheet, View, Text, Image, TouchableOpacity, TouchableHighlight } from "react-native";
+import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { AppContext } from '../App';
 
 function roundValue(value) {
   value = Math.round(value * 100) / 100;
@@ -12,6 +14,16 @@ function roundValue(value) {
 
 export default function CryptInfoCard({ isPlus, id, rank, name, symbol, changePercent24Hr, price }) {
   const navigation = useNavigation();
+  const { state, dispatch } = useContext(AppContext);
+
+  function deleteItem() {
+    dispatch({
+      type: 'DELETE_CRYPTO',
+      payload: {
+        id: id,
+      }
+    });
+  }
 
   return (
     <TouchableHighlight onPress={() => navigation.navigate('CryptoInfo', { id: id })}>
@@ -25,15 +37,15 @@ export default function CryptInfoCard({ isPlus, id, rank, name, symbol, changePe
           </View>
           <View style={styles.priceContainer}>
             <Text style={changePercent24Hr >= 0 ? { color: "rgb(24, 198, 131)" } : { color: "rgb(244, 67, 54)" }}>{roundValue(changePercent24Hr)}%</Text>
-            <Text style={{ color: "white" }}>${roundValue(price)}</Text>
+            <Text style={{ color: "white" }}>${isPlus ? roundValue(price) : roundValue(state.portfolio.cryptoCurrencies.find((item) => item.id === id).price)}</Text>
           </View>
         </View>
         {
           isPlus ?
-            <TouchableOpacity onPress={() => navigation.navigate('AddingCrypto', { name, symbol, price })}>
+            <TouchableOpacity onPress={() => navigation.navigate('ChangingCrypto', { id, rank, changePercent24Hr, name, symbol, price, isAdding: isPlus })}>
               <Text style={styles.addButton}>+</Text>
             </TouchableOpacity> :
-            <TouchableOpacity>
+            <TouchableOpacity onPress={deleteItem}>
               <Icon name='delete' style={styles.removeButton} />
             </TouchableOpacity>
         }
